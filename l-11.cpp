@@ -5,7 +5,7 @@
 #include <string>
 using namespace std;
 
-const int OrderSize = 3; 
+const int OrderSize = 3, NR_Customers = 5; 
 
 // Holds order information
 struct Customer
@@ -18,9 +18,21 @@ struct Customer
 
     ~Customer() // Destructor 
     {
-        // Placeholder for code.
+        if (orders)
+            delete[] orders;
+        orders = nullptr;
     }
 };
+
+void inputOrders(Customer *);
+void displayOrders(Customer *);
+
+int main() 
+{
+
+
+    return 0;
+}
 
 void inputOrders(Customer *orders) 
 {
@@ -38,9 +50,15 @@ void inputOrders(Customer *orders)
     }
 }
 
-int main() 
+void displayOrders(Customer *orders)
 {
-
-
-    return 0;
+    cout << "\nCustomer Orders:\n";
+    for (int i = 0; i < OrderSize; i++) 
+    {
+        cout << "Order Number: " << orders[i].orderNumber << endl;
+        cout << "Items Ordered: " << orders[i].itemsOrdered << endl;
+        cout << "Customer Name: " << orders[i].customerName << endl;
+        cout << "Total Amount: $" << orders[i].totalAmount << endl;
+        cout << "--------------------------\n";
+    }
 }
