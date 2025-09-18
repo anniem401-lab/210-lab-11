@@ -20,10 +20,11 @@ const int OrderSize = 3, NR_Customers = 3;
 struct Customer
 {
     int * orders; // Pointer to dynamically allocate array of orders
-    int orderNumber;
-    int itemsOrdered;
+    int orderNumber; // Unique order number
+    int itemsOrdered; // Number of items ordered (max 3)
+    string itemNames[OrderSize]; // Array to hold item names (max 3 items)
     string customerName;
-    double totalAmount;
+    double totalAmount; // Total amount for the order
 
     ~Customer() // Destructor: deallocates memory to prevent memory leaks
     {
@@ -59,7 +60,7 @@ void inputOrders(Customer *orders)
         cout << "Enter order number: #";
         cin >> orders[i].orderNumber;
 
-        cout << "Enter items ordered: ";
+        cout << "Enter items ordered (1-3): ";
         while (true)
         {
             cin >> orders[i].itemsOrdered;
@@ -70,6 +71,12 @@ void inputOrders(Customer *orders)
             {
                 cout << "Invalid input. Please enter a number between 1 and 3." << endl;
             }
+        }
+
+        cout << "Enter item names (up to 3 items): ";
+        for (int j = 0; j < orders[i].itemsOrdered; j++) 
+        {
+            cin >> orders[i].itemNames[j];
         }
 
         cout << "Enter customer name: ";
@@ -89,6 +96,12 @@ void displayOrders(Customer *orders)
     {
         cout << "Order Number: #" << orders[i].orderNumber << endl;
         cout << "Items Ordered: " << orders[i].itemsOrdered << endl;
+        cout << "Item Names: " << endl;
+        for (int j = 0; j < orders[i].itemsOrdered; j++) 
+        {
+            cout << "- " << orders[i].itemNames[j] << endl;
+        }
+
         cout << "Customer Name: " << orders[i].customerName << endl;
         cout << "Total Amount: $" << orders[i].totalAmount << endl;
         cout << "--------------------------\n";
