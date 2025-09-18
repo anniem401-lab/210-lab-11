@@ -6,7 +6,7 @@
 // which are then printed out as a receipt. I have a struct to represent a customer. 
 // It keeps track their names, order number, items ordered, and the total amount, 
 // which are all members in my struct that are populated by user input. Each customer 
-// is able to order three items that're available. Those items are stored a dynamic 
+// is able to order three items max. Those items are stored a dynamic 
 // array within the struct.
 
 #include <iostream>
@@ -45,6 +45,8 @@ int main()
     displayOrders(reciept); // Displays the orders stored in the array
 
     delete[] reciept; // Deallocate memory for the array
+    reciept = nullptr;
+    
     return 0;
 }
 
@@ -56,8 +58,20 @@ void inputOrders(Customer *orders)
         cout << endl;
         cout << "Enter order number: #";
         cin >> orders[i].orderNumber;
+
         cout << "Enter items ordered: ";
-        cin >> orders[i].itemsOrdered;
+        while (true)
+        {
+            cin >> orders[i].itemsOrdered;
+            if (orders[i].itemsOrdered > 0 && orders[i].itemsOrdered <= 3) 
+            {
+                break; // Valid input, exit the loop
+            } else 
+            {
+                cout << "Invalid input. Please enter a number between 1 and 3." << endl;
+            }
+        }
+
         cout << "Enter customer name: ";
         cin.ignore(); // To ignore the newline character left in the buffer
         getline(cin, orders[i].customerName);
@@ -70,7 +84,7 @@ void inputOrders(Customer *orders)
 // Displays the orders stored in the array
 void displayOrders(Customer *orders)
 {
-    cout << "\nCustomer Orders:\n";
+    cout << "\nCustomer Orders:\n" << endl;
     for (int i = 0; i < OrderSize; i++) 
     {
         cout << "Order Number: #" << orders[i].orderNumber << endl;
